@@ -1,29 +1,27 @@
-class QueueNode:
-    def __init__(self, data, prioritas):
-        self.data = data
-        self.prioritas = prioritas  # Angka lebih kecil = prioritas lebih tinggi (Level 1)
-        self.next = None
+import unittest
+from src.modules.modul_2 import PriorityQueueBantuan, Bantuan
 
-class PriorityQueue:
-    def __init__(self):
-        self.head = None
+class TestPriorityQueueBantuan(unittest.TestCase):
+    def setUp(self):
+        self.pq = PriorityQueueBantuan()
 
-    def enqueue(self, data, prioritas):
-        new_node = QueueNode(data, prioritas)
-        if not self.head or prioritas < self.head.prioritas:
-            new_node.next = self.head
-            self.head = new_node
-            return
+    def test_priority_sorting(self):
+        """Memastikan item dengan prioritas KRITIS (1) keluar lebih dulu daripada RINGAN (3)."""
+        bantuan_ringan = Bantuan(1, "TENDA", 10, "DEPOT_0", "L002", 3)
+        bantuan_kritis = Bantuan(2, "OBAT", 50, "DEPOT_0", "L001", 1)
         
-        curr = self.head
-        while curr.next and curr.next.prioritas <= prioritas:
-            curr = curr.next
-        new_node.next = curr.next
-        curr.next = new_node
+        self.pq.enqueue(bantuan_ringan)
+        self.pq.enqueue(bantuan_kritis)
+        
+        # Dequeue pertama harus menghasilkan bantuan medis yang kritis
+        item_pertama = self.pq.dequeue()
+        self.assertEqual(item_pertama.bantuan_id, 2)
+        self.assertEqual(item_pertama.prioritas, 1)
 
-    def dequeue(self):
-        if not self.head:
-            return None
-        temp = self.head.data
-        self.head = self.head.next
-        return temp
+    def test_empty_queue(self):
+        """Memastikan antrean kosong mengembalikan nilai None dan bernilai True pada is_empty."""
+        self.assertTrue(self.pq.is_empty())
+        self.assertIsNone(self.pq.dequeue())
+
+if __name__ == "__main__":
+    unittest.main()
