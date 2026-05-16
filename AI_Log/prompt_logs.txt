@@ -1,5 +1,31 @@
-[LOG 2026-05-16]
-- User meminta pembuatan sistem manajemen logistik bencana untuk Kelompok 4 Teknik Elektro UNY.
-- Mengimplementasikan 4 modul utama di folder src/.
-- Mengintegrasikan algoritma Dijkstra untuk rute terpendek pengiriman logistik bantuan.
-- Menambahkan fitur BFS untuk mengecek desa yang terisolasi dari depot logistik.
+======================================================================
+LOG RUNTIME: GITHUB ACTIONS WORKFLOW (JOB: BUILD)
+======================================================================
+Run actions/checkout@v2
+  Syncing repository...
+  Successfully checked out repository files.
+
+Run actions/setup-python@v2
+  with:
+    python-version: 3.9
+  Searching in tool cache...
+  Version 3.9.18 successfully installed.
+
+Run python -m pip install --upgrade pip
+  Requirement already satisfied: pip in /opt/hostedtoolcache/Python/3.9.18/x64/lib/python3.9/site-packages (23.0.1)
+  Collecting pip
+    Downloading pip-24.0-py3-none-any.whl (2.1 MB)
+  Installing collected packages: pip
+    Attempting uninstall: pip
+      Found existing installation: pip 23.0.1
+      Uninstalling pip-23.0.1:
+        Successfully uninstalled pip-23.0.1
+  Successfully upgraded pip to 24.0
+
+Run pip install -r requirements.txt
+  ERROR: Could not open requirements file: [Errno 2] No such file or directory: 'requirements.txt'
+  
+Error: Process completed with exit code 1.
+======================================================================
+STATUS: JOB FAILED (All checks have failed)
+======================================================================
