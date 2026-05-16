@@ -48,4 +48,3 @@ jobs:
             python src/main.py
           else
             echo "src/main.py tidak ditemukan"
-          fi
