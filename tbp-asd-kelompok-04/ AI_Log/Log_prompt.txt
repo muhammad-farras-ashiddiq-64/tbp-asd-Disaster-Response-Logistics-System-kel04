@@ -1,1 +1,71 @@
+======================================================================
+LOG DOKUMENTASI ASISTENSI AI - TUGAS BESAR ALGORITMA & STRUKTUR DATA
+SISTEM LOGISTIK RESPONS BENCANA (DISASTER RESPONSE LOGISTICS SYSTEM)
+======================================================================
+Dibuat oleh : Kelompok 4
+Sistem CI   : GitHub Actions (ci.yml via PyTest)
+Target Code : Python 3.11 (Modular Architecture)
+======================================================================
 
+----------------------------------------------------------------------
+SESI 1: DIAGNOSIS & REFACTORING EROR CONFIG CI (GITHUB ACTIONS)
+----------------------------------------------------------------------
+[User Prompt]
+AI_Log/prompt_logs.txt
+(Menyerahkan bukti log eror 'Exit Code 1: No such file or directory: requirements.txt')
+
+[AI Response Analysis & Solution]
+- Menganalisis bahwa mesin virtual Ubuntu di GitHub Actions mengalami crash pada tahap 'pip install -r requirements.txt' karena file tersebut belum ada di root repository.
+- Memberikan solusi perbaikan spasi (indentation) pada file .github/workflows/ci.yml.
+- Menambahkan perintah kondisional 'if [ -f requirements.txt ]; then pip install -r requirements.txt; fi' agar proses build tidak crash meskipun file requirements kosong.
+- Menginjeksikan variabel lingkungan 'PYTHONPATH: ${{ github.workspace }}/src' agar pytest dapat mengenali modul di dalam folder src/.
+
+----------------------------------------------------------------------
+SESI 2: IMPLEMENTASI STRUKTUR DATA MURNI (ENCAPSULATION)
+----------------------------------------------------------------------
+[User Prompt]
+Meminta pembuatan struktur direktori data_structures/ yang berisi:
+- linked_list.py
+- stack.py
+- queue_ll.py
+- bst.py
+- graph.py
+
+[AI Response Analysis & Solution]
+- Membuat kode Linked List dasar dengan metode append() O(n).
+- Membuat kode Priority Queue berbasis Linked List dengan metode enqueue O(n) terurut berdasarkan level urgensi (Level 1 Kritis tertinggi) dan dequeue O(1).
+- Membuat kode Stack murni (LIFO) untuk log transaksi pengiriman logistik guna mendukung fitur ROLLBACK dengan efisiensi O(1).
+- Membuat kode Binary Search Tree (BST) untuk Registry Lokasi berdasarkan kunci 'kode_lokasi' dengan efisiensi rata-rata O(log n).
+- Membuat kode Graph Tidak Berarah menggunakan Adjacency List berbasis Linked List kustom untuk memetakan rute antar-posko logistik.
+
+----------------------------------------------------------------------
+SESI 3: INTEGRASI ALGORITMA GRAPH & REFACTORING RUNTIME CLI
+----------------------------------------------------------------------
+[User Prompt]
+- Meminta kode Modul 1 (BFS Jaringan Rute) dan Modul 5 (Dijkstra & Audit Jarak dengan Selection Sort Linked List).
+- Menyediakan log aktivitas rename file modul di repositori (Modul_1_Graph_Jaringan_Rute.py, Modul_5_Dijkstra_dan_Audit_Jarak.py, dll.).
+
+[AI Response Analysis & Solution]
+- Mengimplementasikan fungsi BFS O(V+E) pada Modul 1 untuk mencari dan mengembalikan daftar nama desa/posko yang terisolasi dari DEPOT_PUSAT akibat akses jalan terputus.
+- Mengimplementasikan Algoritma Dijkstra O(V^2 + E) pada Modul 5 untuk menghitung rute distribusi dengan jarak minimum.
+- Membuat fungsi Audit Jarak menggunakan algoritma Selection Sort O(V^2) yang memanipulasi linked list manual secara langsung untuk mengurutkan tingkat kesulitan jangkauan wilayah.
+- Merestrukturisasi berkas 'src/main.py' (Modul 6 CLI) agar jalur impor data menyesuaikan dengan nama berkas baru yang menggunakan snake_case tanpa spasi.
+- Menambahkan fitur penanganan parameter '--test' (sys.argv) pada main.py agar alur pengujian otomatis di server GitHub Actions dapat melakukan validasi integritas struktur data dalam 1 detik tanpa terjebak di dalam loop interaktif 'while True' (mencegah CI hang/timeout).
+
+----------------------------------------------------------------------
+SESI 4: PENGEMBANGAN CAKUPAN UNIT TESTING (QUALITY ASSURANCE)
+----------------------------------------------------------------------
+[User Prompt]
+Meminta pembuatan berkas unit test untuk komponen BST, Graph, dan Linked List.
+
+[AI Response Analysis & Solution]
+- Membuat 'tests/test_linked_list.py' menggunakan unittest framework untuk memvalidasi pointer head, tail, runtunan sekuensial append, dan penanganan tipe data kamus (dictionary).
+- Membuat 'tests/test_bst.py' untuk memvalidasi akurasi fungsi insert, pencarian biner valid/invalid, serta fungsionalitas update_level.
+- Membuat 'tests/test_graph.py' untuk menguji keterhubungan dua arah pada Adjacency List serta pembuktian logika BFS dalam mendeteksi isolasi wilayah.
+
+======================================================================
+STATUS AKHIR REPOSITORI:
+- Seluruh pemeriksaan otomatis (All checks have passed / CENTANG HIJAU).
+- Bebas dari dependensi library eksternal (Pure Data Structures).
+- Memenuhi spesifikasi kompleksitas waktu (Big-O) yang ditargetkan.
+======================================================================
