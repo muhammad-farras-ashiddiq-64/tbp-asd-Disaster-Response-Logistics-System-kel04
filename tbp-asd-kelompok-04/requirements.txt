@@ -1,0 +1,14 @@
+# ==============================================================================
+# REQUIREMENTS.TXT - Disaster Response Logistics System
+# Kelompok 4 - S1 Teknik Elektro UNY
+# ==============================================================================
+
+# Framework Pengujian Otomatis (Wajib untuk GitHub Actions CI)
+pytest==8.1.1
+
+# Library Visualisasi & Analisis (Sangat berguna untuk grafik Benchmark Performa Runtime)
+# matplotlib==3.8.3      # Buka tanda pagar jika Anda menggunakan skrip benchmark.py untuk membuat grafik Big-O
+# numpy==1.26.4           # Buka tanda pagar jika diperlukan untuk kalkulasi matriks tetangga/graph
+
+# Pustaka Utilitas Tampilan CLI (Opsional)
+# tabulate==0.9.0        # Buka tanda pagar jika ingin cetak tabel logistik otomatis yang rapi di terminal
