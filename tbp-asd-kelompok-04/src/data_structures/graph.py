@@ -1,29 +1,60 @@
-class AdjNode:
-    def __init__(self, tujuan, bobot):
-        self.tujuan = tujuan
-        self.bobot = bobot
+# src/data_structures/graph.py
+
+class EdgeNode:
+    def __init__(self, dest, jarak, kapasitas):
+        self.dest = dest
+        self.jarak = jarak
+        self.kapasitas = kapasitas
         self.next = None
 
-class Graph:
+class GraphRute:
     def __init__(self):
-        self.adj_list = {}
-        self.nodes = []
+        self.adj = {}
 
-    def tambah_node(self, nama):
-        if nama not in self.adj_list:
-            self.adj_list[nama] = None
-            self.nodes.append(nama)
+    def tambah_node(self, kode):
+        """Big-O: O(1)"""
+        if kode not in self.adj:
+            self.adj[kode] = None
 
-    def tambah_rute(self, u, v, bobot):
+    def tambah_rute(self, u, v, jarak, kapasitas):
+        """Big-O: O(1). Graf Tidak Berarah (Sesuai deskripsi Tugas Esai)"""
         self.tambah_node(u)
         self.tambah_node(v)
         
-        # Sisi U -> V
-        new_node = AdjNode(v, bobot)
-        new_node.next = self.adj_list[u]
-        self.adj_list[u] = new_node
+        # Jalur u -> v
+        node_uv = EdgeNode(v, jarak, kapasitas)
+        node_uv.next = self.adj[u]
+        self.adj[u] = node_uv
         
-        # Sisi V -> U (Tidak Berarah)
-        new_node = AdjNode(u, bobot)
-        new_node.next = self.adj_list[v]
-        self.adj_list[v] = new_node
+        # Jalur v -> u
+        node_vu = EdgeNode(u, jarak, kapasitas)
+        node_vu.next = self.adj[v]
+        self.adj[v] = node_vu
+
+    def tetangga(self, u):
+        """Big-O: O(deg(u))"""
+        nodes = []
+        curr = self.adj.get(u, None)
+        while curr:
+            nodes.append((curr.dest, curr.jarak, curr.kapasitas))
+            curr = curr.next
+        return nodes
+
+    def bfs_akses(self, depot):
+        """BFS dari depot menghasilkan himpunan lokasi yang dapat dijangkau. Big-O: O(V+E)"""
+        visited = set()
+        if depot not in self.adj:
+            return visited
+            
+        queue = [depot]
+        visited.add(depot)
+        
+        while queue:
+            curr = queue.pop(0)
+            edge = self.adj.get(curr, None)
+            while edge:
+                if edge.dest not in visited:
+                    visited.add(edge.dest)
+                    queue.append(edge.dest)
+                edge = edge.next
+        return visited
