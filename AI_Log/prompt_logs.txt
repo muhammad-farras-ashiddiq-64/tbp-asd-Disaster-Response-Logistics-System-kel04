@@ -1,0 +1,5 @@
+[LOG 2026-05-16]
+- User meminta pembuatan sistem manajemen logistik bencana untuk Kelompok 4 Teknik Elektro UNY.
+- Mengimplementasikan 4 modul utama di folder src/.
+- Mengintegrasikan algoritma Dijkstra untuk rute terpendek pengiriman logistik bantuan.
+- Menambahkan fitur BFS untuk mengecek desa yang terisolasi dari depot logistik.
