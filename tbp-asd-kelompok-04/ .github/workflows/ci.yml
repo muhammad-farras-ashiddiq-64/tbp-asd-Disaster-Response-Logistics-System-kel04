@@ -27,4 +27,4 @@ pip install -r requirements.txt
   - name: Run unit tests 
 run: pytest tests/ -v --tb=short 
   - name: Check kode berjalan 
-run: echo 'OK  semua test lulus' && python src/main.py --test
+run: echo 'OK  semua test lulus' && python src/main.py --test 
