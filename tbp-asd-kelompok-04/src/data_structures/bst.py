@@ -1,31 +1,62 @@
-class BSTNode:
-    def __init__(self, kode, nama, level, populasi):
-        self.kode = kode
-        self.nama = nama
-        self.level = level
-        self.populasi = populasi
-        self.status = "Menunggu"
+# src/data_structures/bst.py
+
+class BSTNodeLok:
+    def __init__(self, lokasi):
+        self.lokasi = lokasi
         self.left = None
         self.right = None
 
-class BST:
+class BSTLokasi:
     def __init__(self):
         self.root = None
 
-    def insert(self, kode, nama, level, populasi):
-        def _insert(node, kode, nama, level, populasi):
-            if not node:
-                return BSTNode(kode, nama, level, populasi)
-            if kode < node.kode:
-                node.left = _insert(node.left, kode, nama, level, populasi)
-            elif kode > node.kode:
-                node.right = _insert(node.right, kode, nama, level, populasi)
-            return node
-        self.root = _insert(self.root, kode, nama, level, populasi)
+    def insert(self, lokasi):
+        """Big-O: O(log n). Kunci = lokasi.kode"""
+        new_node = BSTNodeLok(lokasi)
+        if not self.root:
+            self.root = new_node
+            return
+        
+        curr = self.root
+        while True:
+            if lokasi.kode < curr.lokasi.kode:
+                if not curr.left:
+                    curr.left = new_node
+                    break
+                curr = curr.left
+            elif lokasi.kode > curr.lokasi.kode:
+                if not curr.right:
+                    curr.right = new_node
+                    break
+                curr = curr.right
+            else:
+                curr.lokasi = lokasi  # Update jika kode sudah ada
+                break
 
     def search(self, kode):
+        """Big-O: O(log n)"""
         curr = self.root
         while curr:
-            if kode == curr.kode: return curr
-            curr = curr.left if kode < curr.kode else curr.right
+            if kode == curr.lokasi.kode:
+                return curr.lokasi
+            curr = curr.left if kode < curr.lokasi.kode else curr.right
         return None
+
+    def update_level(self, kode, level):
+        """Big-O: O(log n)"""
+        lokasi = self.search(kode)
+        if lokasi:
+            lokasi.level = level
+            return True
+        return False
+
+    def inorder(self):
+        """Big-O: O(n)"""
+        result = []
+        def _inorder(node):
+            if node:
+                _inorder(node.left)
+                result.append(node.lokasi)
+                _inorder(node.right)
+        _inorder(self.root)
+        return result
