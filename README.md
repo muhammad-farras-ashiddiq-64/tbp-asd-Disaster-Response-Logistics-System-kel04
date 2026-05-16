@@ -1,4 +1,3 @@
-@@ -1,45 +0,0 @@
 # KELOMPOK-4-Disaster-Response-Logistics-system
 TOPIK 9 Disaster Response Logistics system
 # Team
