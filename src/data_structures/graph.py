@@ -1,56 +1,28 @@
-from typing import List, Dict, Tuple, Optional
-from src.data_structures.linked_list import LLNode
+import unittest
+from src.modules.modul_1 import GraphRute
+from src.modules.modul_5 import dijkstra, rekonstruksi_jalur
 
-class EdgeNode:
-    def __init__(self, dest: str, jarak: int):
-        self.dest = dest
-        self.jarak = jarak
-        self.next = None
+class TestGraphRouting(unittest.TestCase):
+    def setUp(self):
+        self.graph = GraphRute()
+        # Membuat peta mini: DEPOT -> L001 (10 km), L001 -> L002 (5 km), DEPOT -> L002 (25 km)
+        self.graph.tambah_rute("DEPOT_0", "L001", 10)
+        self.graph.tambah_rute("L001", "L002", 5)
+        self.graph.tambah_rute("DEPOT_0", "L002", 25)
 
-class GraphRute:
-    def __init__(self):
-        self.adj: Dict[str, Optional[EdgeNode]] = {}
+    def test_bfs_connectivity(self):
+        """Memastikan BFS dapat mengidentifikasi seluruh simpul yang terhubung."""
+        terjangkau = self.graph.bfs_akses("DEPOT_0")
+        self.assertIn("L002", terjangkau)
+        self.assertIn("L001", terjangkau)
 
-    def tambah_node(self, kode: str):
-        if kode not in self.adj:
-            self.adj[kode] = None
-
-    def tambah_rute(self, u: str, v: str, jarak: int):
-        self.tambah_node(u)
-        self.tambah_node(v)
+    def test_dijkstra_shortest_path(self):
+        """Memastikan algoritma Dijkstra memilih jalur optimum lewat L001 (Jarak 15) bukan langsung (Jarak 25)."""
+        dist, parent = dijkstra(self.graph, "DEPOT_0")
+        self.assertEqual(dist["L002"], 15)
         
-        # Graf Tidak Berarah (Saling terhubung dua arah)
-        node_uv = EdgeNode(v, jarak)
-        node_uv.next = self.adj[u]
-        self.adj[u] = node_uv
+        jalur = rekonstruksi_jalur(parent, "DEPOT_0", "L002")
+        self.assertEqual(jalur, ["DEPOT_0", "L001", "L002"])
 
-        node_vu = EdgeNode(u, jarak)
-        node_vu.next = self.adj[v]
-        self.adj[v] = node_vu
-
-    def tetangga(self, u: str) -> List[Tuple[str, int]]:
-        hasil = []
-        curr = self.adj.get(u)
-        while curr:
-            hasil.append((curr.dest, curr.jarak))
-            curr = curr.next
-        return hasil
-
-    def bfs_akses(self, depot: str) -> set:
-        """Mendeteksi seluruh node yang dapat dijangkau dari depot tertentu."""
-        if depot not in self.adj: 
-            return set()
-        visited = {depot}
-        q_head = LLNode(depot)
-        q_tail = q_head
-
-        while q_head is not None:
-            curr_kode = q_head.data
-            q_head = q_head.next
-            for (nbr, _) in self.tetangga(curr_kode):
-                if nbr not in visited:
-                    visited.add(nbr)
-                    new_node = LLNode(nbr)
-                    q_tail.next = new_node
-                    q_tail = new_node
-        return visited
+if __name__ == "__main__":
+    unittest.main()
