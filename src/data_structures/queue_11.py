@@ -1,11 +1,6 @@
-# Modul Struktur Data Dasar: Node & Antrean Linked List
 from dataclasses import dataclass
-from typing import Any, Optional
-
-class LLNode:
-    def __init__(self, data: Any = None):
-        self.data = data
-        self.next = None
+from typing import Optional, List
+from src.data_structures.linked_list import LLNode
 
 @dataclass
 class Bantuan:
@@ -25,6 +20,7 @@ class PriorityQueueBantuan:
         node = LLNode(outbound_bantuan)
         self._size += 1
 
+        # Jika antrean kosong atau prioritas lebih tinggi (angka level lebih kecil)
         if self.head is None or outbound_bantuan.prioritas < self.head.data.prioritas:
             node.next = self.head
             self.head = node
@@ -48,7 +44,7 @@ class PriorityQueueBantuan:
     def is_empty(self) -> bool:
         return self.head is None
 
-    def to_list(self) -> list:
+    def to_list(self) -> List[Bantuan]:
         result, curr = [], self.head
         while curr:
             result.append(curr.data)
