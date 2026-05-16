@@ -29,13 +29,13 @@ Project ini menggunakan beberapa struktur data utama yang dibangun secara manual
 
 # Fitur Program
 * **KIRIM:** Memasukkan permintaan bantuan logistik ke dalam antrean *Priority Queue*.
-* **PROSES_BANTUAN:** Mendistribusikan bantuan berdasarkan prioritas tertinggi dan mencatatnya ke dalam *Stack Log*.
-* **STATUS_ANTRIAN:** Menampilkan daftar bantuan yang sedang menunggu dalam antrean.
-* **RUTE_OPTIMAL:** Mencari dan menampilkan jalur terpendek menggunakan algoritma Dijkstra.
-* **TIDAK_TERJANGKAU:** Melakukan audit aksesibilitas menggunakan BFS untuk melihat desa yang terisolasi.
-* **UPDATE_LEVEL:** Memperbarui tingkat keparahan bencana suatu lokasi langsung pada pohon BST.
-* **LAPORAN_BENCANA:** Menampilkan laporan wilayah yang diurutkan berdasarkan skor urgensi menggunakan Quick Sort.
-* **LOG_PENGIRIMAN:** Menampilkan riwayat transaksi distribusi logistik yang telah berhasil diproses.
+* **PROSES BANTUAN:** Mendistribusikan bantuan berdasarkan prioritas tertinggi dan mencatatnya ke dalam *Stack Log*.
+* **STATUS ANTRIAN:** Menampilkan daftar bantuan yang sedang menunggu dalam antrean.
+* **RUTE OPTIMAL:** Mencari dan menampilkan jalur terpendek menggunakan algoritma Dijkstra.
+* **TIDAK TERJANGKAU:** Melakukan audit aksesibilitas menggunakan BFS untuk melihat desa yang terisolasi.
+* **UPDATE LEVEL:** Memperbarui tingkat keparahan bencana suatu lokasi langsung pada pohon BST.
+* **LAPORAN BENCANA:** Menampilkan laporan wilayah yang diurutkan berdasarkan skor urgensi menggunakan Quick Sort.
+* **LOG PENGIRIMAN:** Menampilkan riwayat transaksi distribusi logistik yang telah berhasil diproses.
 * **ROLLBACK:** Membatalkan transaksi pengiriman terakhir dan mengembalikan datanya ke dalam *Priority Queue*.
 
 # Struktur Folder
