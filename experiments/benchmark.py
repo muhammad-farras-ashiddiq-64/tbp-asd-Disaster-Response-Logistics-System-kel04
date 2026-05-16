@@ -1,29 +1,26 @@
 import time
 import random
-import numpy as np
-from src.module_1 import GraphRute, dijkstra
+from src.modules.modul_1 import GraphRute
+from src.modules.modul_4 import dijkstra
 
 def run_benchmark():
     print("=== EXPERIMENT: RUNTIME BENCHMARK ===")
     g = GraphRute()
     
-    # Generate 500 node lokasi secara acak
-    for i in range(500):
+    for i in range(100):
         g.tambah_node(f"L{i}")
     
-    # Buat rute acak antar node
-    for _ in range(1000):
-        u = f"L{random.randint(0, 499)}"
-        v = f"L{random.randint(0, 499)}"
+    for _ in range(200):
+        u = f"L{random.randint(0, 99)}"
+        v = f"L{random.randint(0, 99)}"
         if u != v:
             g.tambah_rute(u, v, random.randint(5, 50))
             
-    # Hitung waktu eksekusi Algoritma Dijkstra
     start_time = time.time()
     dist, parent = dijkstra(g, "L0")
     end_time = time.time()
     
-    print(f"Waktu eksekusi Dijkstra untuk 500 Node: {end_time - start_time:.6f} detik")
+    print(f"Waktu eksekusi Dijkstra: {end_time - start_time:.6f} detik")
 
 if __name__ == "__main__":
     run_benchmark()
