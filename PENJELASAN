@@ -1,1 +1,3 @@
-
+    Kode ini membuat struktur data Binary Search Tree (BST) untuk menyimpan objek lokasi. Kelas BSTNodeLok berfungsi sebagai node pada BST yang menyimpan data lokasi, serta memiliki atribut left dan right untuk menghubungkan node dengan anak kiri dan anak kanan.
+    Kelas BSTLokasi digunakan untuk mengelola BST. Method insert() menambahkan lokasi baru ke pohon berdasarkan lokasi.kode sebagai kunci agar data tersusun secara otomatis. Method search() digunakan untuk mencari lokasi berdasarkan kode tertentu, sedangkan update_level() dipakai untuk mengubah nilai level pada lokasi yang ditemukan.
+    Method inorder() melakukan proses traversal dengan urutan kiri → akar → kanan sehingga menghasilkan daftar lokasi yang sudah terurut berdasarkan kode. Selain itu, terdapat kelas EdgeNode yang digunakan untuk menyimpan informasi hubungan antar lokasi, seperti tujuan (dest), jarak (jarak), dan kapasitas (kapasitas) untuk kebutuhan struktur graf atau jaringan.
