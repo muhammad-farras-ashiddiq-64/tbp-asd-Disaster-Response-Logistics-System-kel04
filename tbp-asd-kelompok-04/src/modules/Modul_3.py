@@ -1,3 +1,45 @@
+import numpy as np
+import time
+import random
+from dataclasses import dataclass
+from typing import Optional, List, Dict, Tuple
+
+np.random.seed(47)
+random.seed(47)
+
+LEVEL_BENCANA = {
+    'KRITIS': 1,
+    'SEDANG': 2,
+    'RINGAN': 3
+}
+
+JENIS_BANTUAN = [
+    'MAKANAN',
+    'AIR',
+    'OBAT',
+    'SELIMUT',
+    'TENDA'
+]
+
+
+@dataclass
+class Lokasi:
+    kode: str
+    nama: str
+    level: int
+    populasi: int
+    status: int = 0
+
+
+@dataclass
+class Bantuan:
+    bantuan_id: int
+    jenis: str
+    jumlah: int
+    asal: str
+    tujuan: str
+    prioritas: int
+    
 class BSTNodeLok:
     def __init__(self, lokasi):
         self.lokasi = lokasi
