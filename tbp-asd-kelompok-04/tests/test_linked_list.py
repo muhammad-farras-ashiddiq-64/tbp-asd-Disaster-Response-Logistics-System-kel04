@@ -16,7 +16,7 @@ class TestLinkedList(unittest.TestCase):
         """Menguji penambahan satu data ke dalam Linked List"""
         self.list.append("DEPOT_PUSAT")
         
-        # Head tidak boleh kosong dan harus menyimpan data yang benar
+       
         self.assertIsNotNone(self.list.head)
         self.assertEqual(self.list.head.data, "DEPOT_PUSAT")
         # Elemen pertama harus menunjuk ke None karena belum ada elemen kedua
@@ -28,21 +28,21 @@ class TestLinkedList(unittest.TestCase):
         self.list.append("Posko_B")
         self.list.append("Posko_C")
 
-        # Cek data pada head (elemen pertama)
+       
         node_1 = self.list.head
         self.assertEqual(node_1.data, "Posko_A")
 
-        # Cek elemen kedua (next dari head)
+       
         node_2 = node_1.next
         self.assertIsNotNone(node_2)
         self.assertEqual(node_2.data, "Posko_B")
 
-        # Cek elemen ketiga
+       
         node_3 = node_2.next
         self.assertIsNotNone(node_3)
         self.assertEqual(node_3.data, "Posko_C")
 
-        # Elemen terakhir harus menunjuk ke None
+        
         self.assertIsNone(node_3.next)
 
     def test_append_berbagai_tipe_data(self):
