@@ -1,41 +1,77 @@
-class BSTNode:
-    def __init__(self, kode, nama, level, populasi):
-        self.kode = kode  # Kunci/Key untuk BST
-        self.nama = nama
-        self.level = level
-        self.populasi = populasi
-        self.status = "Menunggu Bantuan"
+class BSTNodeLok:
+    def __init__(self, lokasi):
+        self.lokasi = lokasi
         self.left = None
         self.right = None
 
-class BST:
+
+class BSTLokasi:
     def __init__(self):
         self.root = None
 
-    def insert(self, kode, nama, level, populasi):
-        """O(log n) rata-rata"""
-        def _insert(node, kode, nama, level, populasi):
-            if not node:
-                return BSTNode(kode, nama, level, populasi)
-            if kode < node.kode:
-                node.left = _insert(node.left, kode, nama, level, populasi)
-            elif kode > node.kode:
-                node.right = _insert(node.right, kode, nama, level, populasi)
+    def insert(self, lokasi):
+        """Big-O: O(log n). Kunci = lokasi.kode."""
+
+        def _insert(node, lokasi):
+            if node is None:
+                return BSTNodeLok(lokasi)
+
+            if lokasi.kode < node.lokasi.kode:
+                node.left = _insert(node.left, lokasi)
+
+            elif lokasi.kode > node.lokasi.kode:
+                node.right = _insert(node.right, lokasi)
+
             return node
-        self.root = _insert(self.root, kode, nama, level, populasi)
+
+        self.root = _insert(self.root, lokasi)
 
     def search(self, kode):
-        """O(log n) rata-rata"""
-        curr = self.root
-        while curr:
-            if kode == curr.kode:
-                return curr
-            curr = curr.left if kode < curr.kode else curr.right
+        """Big-O: O(log n)."""
+
+        current = self.root
+
+        while current:
+            if kode == current.lokasi.kode:
+                return current.lokasi
+
+            elif kode < current.lokasi.kode:
+                current = current.left
+
+            else:
+                current = current.right
+
         return None
 
-    def update_level(self, kode, level_baru):
-        node = self.search(kode)
-        if node:
-            node.level = level_baru
+    def update_level(self, kode, level):
+        """Big-O: O(log n)."""
+
+        lokasi = self.search(kode)
+
+        if lokasi:
+            lokasi.level = level
             return True
+
         return False
+
+    def inorder(self):
+        """Big-O: O(n)."""
+
+        hasil = []
+
+        def _inorder(node):
+            if node:
+                _inorder(node.left)
+                hasil.append(node.lokasi)
+                _inorder(node.right)
+
+        _inorder(self.root)
+        return hasil
+
+
+class EdgeNode:
+    def __init__(self, dest, jarak, kapasitas):
+        self.dest = dest
+        self.jarak = jarak
+        self.kapasitas = kapasitas
+        self.next = None
