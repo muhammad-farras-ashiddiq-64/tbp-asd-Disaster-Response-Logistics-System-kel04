@@ -1,27 +1,38 @@
-import unittest
-from src.modules.modul_2 import PriorityQueueBantuan, Bantuan
+# src/data_structures/queue_ll.py
 
-class TestPriorityQueueBantuan(unittest.TestCase):
-    def setUp(self):
-        self.pq = PriorityQueueBantuan()
+from data_structures.linked_list import LLNode
 
-    def test_priority_sorting(self):
-        """Memastikan item dengan prioritas KRITIS (1) keluar lebih dulu daripada RINGAN (3)."""
-        bantuan_ringan = Bantuan(1, "TENDA", 10, "DEPOT_0", "L002", 3)
-        bantuan_kritis = Bantuan(2, "OBAT", 50, "DEPOT_0", "L001", 1)
+class PriorityQueueBantuan:
+    """Lokasi KRITIS (level=1) selalu dilayani lebih dulu."""
+    def __init__(self):
+        self.head = None
+        self._size = 0
+
+    def enqueue(self, outbound_bantuan):
+        """Big-O: O(n) insertion terurut prioritas."""
+        new_node = LLNode(outbound_bantuan)
+        self._size += 1
         
-        self.pq.enqueue(bantuan_ringan)
-        self.pq.enqueue(bantuan_kritis)
-        
-        # Dequeue pertama harus menghasilkan bantuan medis yang kritis
-        item_pertama = self.pq.dequeue()
-        self.assertEqual(item_pertama.bantuan_id, 2)
-        self.assertEqual(item_pertama.prioritas, 1)
+        # Urutkan berdasarkan prioritas terkecil (nilai prioritas int rendah = utama)
+        if not self.head or outbound_bantuan.prioritas < self.head.data.prioritas:
+            new_node.next = self.head
+            self.head = new_node
+            return
 
-    def test_empty_queue(self):
-        """Memastikan antrean kosong mengembalikan nilai None dan bernilai True pada is_empty."""
-        self.assertTrue(self.pq.is_empty())
-        self.assertIsNone(self.pq.dequeue())
+        curr = self.head
+        while curr.next and curr.next.data.prioritas <= outbound_bantuan.prioritas:
+            curr = curr.next
+        new_node.next = curr.next
+        curr.next = new_node
 
-if __name__ == "__main__":
-    unittest.main()
+    def dequeue(self):
+        """Big-O: O(1)"""
+        if not self.head:
+            return None
+        temp = self.head.data
+        self.head = self.head.next
+        self._size -= 1
+        return temp
+
+    def __len__(self):
+        return self._size
