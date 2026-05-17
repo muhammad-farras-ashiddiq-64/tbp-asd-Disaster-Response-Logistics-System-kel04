@@ -3,22 +3,23 @@
 from data_structures.linked_list import LLNode
 
 class PriorityQueueBantuan:
-    """Lokasi KRITIS (level=1) selalu dilayani lebih dulu."""
     def __init__(self):
         self.head = None
         self._size = 0
 
     def enqueue(self, outbound_bantuan):
-        """Big-O: O(n) insertion terurut prioritas."""
+        """Memasukkan data secara terurut berdasarkan prioritas. 
+        Angka prioritas lebih kecil (1 = Kritis) akan ditaruh di depan."""
         new_node = LLNode(outbound_bantuan)
         self._size += 1
         
-        # Urutkan berdasarkan prioritas terkecil (nilai prioritas int rendah = utama)
+        # Kasus 1: Antrean masih kosong ATAU data baru memiliki prioritas lebih tinggi dari head
         if not self.head or outbound_bantuan.prioritas < self.head.data.prioritas:
             new_node.next = self.head
             self.head = new_node
             return
 
+        # Kasus 2: Cari posisi penyisipan di tengah atau akhir antrean
         curr = self.head
         while curr.next and curr.next.data.prioritas <= outbound_bantuan.prioritas:
             curr = curr.next
@@ -26,7 +27,7 @@ class PriorityQueueBantuan:
         curr.next = new_node
 
     def dequeue(self):
-        """Big-O: O(1)"""
+        """Mengambil data terdepan (Prioritas Tertinggi) -> O(1)"""
         if not self.head:
             return None
         temp = self.head.data
