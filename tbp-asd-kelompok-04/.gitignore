@@ -1,20 +1,18 @@
 # Python
 __pycache__/
 *.py[cod]
+*$py.class
 *.so
-.env
-# Virtual environment
+
+# Virtual Environment
 venv/
-.venv/
 env/
-# IDE / Editor
+.env
+
+# IDEs
 .vscode/
 .idea/
-*.swp
-# OS
+
+# OS Files
 .DS_Store
 Thumbs.db
-# Hasil eksperimen besar (simpan di Google Drive, bukan repo)
-*.csv
-*.pkl
-data/large_*
