@@ -11,13 +11,34 @@ S1 Teknik Elektro
 Universitas Negeri Yogyakarta
 
 # Deskripsi Project
-Project ini merupakan implementasi sistem manajemen logistik respons bencana (Disaster Response Logistics) menggunakan bahasa Python dan konsep Algoritma Struktur Data. Sistem dirancang untuk membantu mengoptimalkan distribusi bantuan/logistik dari gudang pusat (depot) menuju wilayah terdampak bencana secara cepat dan efisien dengan mempertimbangkan:
-* Tingkat urgensi atau level bencana di tiap lokasi (Kritis, Sedang, Ringan)
-* Jumlah populasi terdampak
-* Keterjangkauan wilayah distribusi
-* Jarak rute pengiriman terpendek
+Proyek ini merupakan simulasi sistem logistik tanggap bencana
+menggunakan struktur data Graph, Priority Queue, BST, dan Stack.
 
-# Struktur Data yang Digunakan
+Sistem digunakan untuk:
+- mengelola distribusi bantuan,
+- mencari rute distribusi tercepat,
+- memprioritaskan daerah kritis,
+- menyimpan log distribusi bantuan.
+
+# Latar Belakang
+Indonesia memiliki risiko bencana tinggi sehingga diperlukan
+sistem distribusi bantuan yang efisien dan terstruktur.
+
+## Tujuan
+- Mengimplementasikan struktur data dari nol
+- Membangun simulasi logistik bencana berbasis CLI
+- Menganalisis kompleksitas Big-O
+- Menguji performa struktur data
+
+## Struktur Data
+
+| Struktur Data | Fungsi |
+| Priority Queue | Prioritas bantuan |
+| BST | Penyimpanan lokasi |
+| Graph | Jalur distribusi |
+| Stack | Log distribusi |
+| Linked List | Implementasi node |
+
 Project ini menggunakan beberapa struktur data utama yang dibangun secara manual (*from scratch*), yaitu:
 * **Binary Search Tree (BST) :** Mengelola registrasi data lokasi desa/kelurahan terdampak dan melakukan pencarian serta pembaruan level bencana secara efisien.
 * **Priority Queue :** Mengatur urutan antrean bantuan logistik menggunakan *Singly Linked List* terurut, di mana wilayah dengan level bencana `KRITIS` otomatis dilayani paling depan.
@@ -27,16 +48,15 @@ Project ini menggunakan beberapa struktur data utama yang dibangun secara manual
 * **Algoritma Dijkstra :** Menentukan rute atau jalur distribusi logistik dengan jarak terpendek dari depot ke lokasi target.
 * **Quick Sort :** Melakukan pengurutan data lokasi terdampak berdasarkan skor urgensi tertinggi untuk pembuatan laporan kebencanaan.
 
-# Fitur Program
-* **KIRIM :** Memasukkan permintaan bantuan logistik ke dalam antrean *Priority Queue*.
-* **PROSES BANTUAN :** Mendistribusikan bantuan berdasarkan prioritas tertinggi dan mencatatnya ke dalam *Stack Log*.
-* **STATUS ANTRIAN :** Menampilkan daftar bantuan yang sedang menunggu dalam antrean.
-* **RUTE OPTIMAL :** Mencari dan menampilkan jalur terpendek menggunakan algoritma Dijkstra.
-* **TIDAK TERJANGKAU :** Melakukan audit aksesibilitas menggunakan BFS untuk melihat desa yang terisolasi.
-* **UPDATE LEVEL :** Memperbarui tingkat keparahan bencana suatu lokasi langsung pada pohon BST.
-* **LAPORAN BENCANA :** Menampilkan laporan wilayah yang diurutkan berdasarkan skor urgensi menggunakan Quick Sort.
-* **LOG PENGIRIMAN :** Menampilkan riwayat transaksi distribusi logistik yang telah berhasil diproses.
-* **ROLLBACK :** Membatalkan transaksi pengiriman terakhir dan mengembalikan datanya ke dalam *Priority Queue*.
+## Fitur Sistem
+
+- KIRIM bantuan
+- PROSES bantuan prioritas
+- PENCARIAN lokasi
+- RUTE tercepat
+- LOG distribusi
+- DFS/BFS graph traversal
+- Dijkstra shortest path
 
 # Struktur Folder
 * `docs/`          -> laporan proyek dan slide presentasi
