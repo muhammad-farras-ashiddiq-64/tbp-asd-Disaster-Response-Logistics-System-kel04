@@ -1,18 +1,20 @@
-# Python
+# Cache Python
 __pycache__/
-*.py[cod]
-*$py.class
-*.so
+*.pyc
+*.pyo
+*.pyd
 
-# Virtual Environment
-venv/
+# Environment Virtual
 env/
+venv/
 .env
+.venv
 
-# IDEs
+# Editor (VS Code / PyCharm)
 .vscode/
 .idea/
+*.swp
 
-# OS Files
+# OS sampah
 .DS_Store
-Thumbs.db
+Thumbs.dbgit
