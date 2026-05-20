@@ -1,1 +1,19 @@
+Stack adalah struktur data dengan konsep LIFO (Last In First Out), artinya data yang terakhir masuk akan menjadi data pertama yang keluar. Contohnya seperti tumpukan piring: piring terakhir yang ditaruh di atas akan diambil lebih dulu.
+Pada bagian awal terdapat:
+from src.models import LLNode
+Artinya program menggunakan class LLNode dari file lain sebagai node pada linked list. Node ini biasanya memiliki atribut seperti data untuk menyimpan nilai dan next untuk menunjuk node berikutnya.
+Di dalam class Stack, method __init__() digunakan sebagai konstruktor untuk membuat stack kosong. Variabel self.top menyimpan posisi elemen paling atas stack, sedangkan self._size digunakan untuk menghitung jumlah data di dalam stack.
+Method push(data) berfungsi menambahkan data ke bagian atas stack. Program membuat node baru, lalu node tersebut diarahkan ke top sebelumnya menggunakan:
+new_node.next = self.top
+Setelah itu self.top dipindahkan ke node baru sehingga node baru menjadi elemen teratas. Proses ini memiliki kompleksitas waktu O(1) karena penambahan data dilakukan langsung tanpa menelusuri seluruh linked list.
+Method pop() digunakan untuk menghapus elemen paling atas stack. Jika stack kosong maka akan mengembalikan None. Jika ada data, nilai pada top disimpan terlebih dahulu, kemudian posisi top dipindahkan ke node berikutnya:
+self.top = self.top.next
+Dengan begitu node lama terhapus dari stack. Operasi ini juga memiliki kompleksitas O(1) karena hanya memindahkan pointer.
+Method peek() digunakan untuk melihat data paling atas tanpa menghapusnya. Jika stack kosong maka hasilnya None. Sedangkan method to_list() digunakan untuk mengubah isi stack menjadi list Python biasa dengan cara menelusuri node satu per satu dari top hingga node terakhir.
+Secara keseluruhan, kode ini sudah cukup baik karena:
+Menggunakan konsep linked list sehingga ukuran stack fleksibel.
+Operasi utama (push dan pop) berjalan sangat cepat yaitu O(1).
+Struktur kode rapi dan mudah dipahami.
+Sudah menangani kondisi stack kosong pada pop() dan peek().
 
+Jadi, inti kerja program ini adalah menyimpan data dalam bentuk tumpukan menggunakan linked list, dengan akses utama hanya pada bagian paling atas (top).
