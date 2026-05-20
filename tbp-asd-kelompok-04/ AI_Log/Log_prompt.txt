@@ -1,3 +1,239 @@
-bantu saya untuk menganalisis sebuah kode yang telah saya susun, dengan teliti dan berikan saya penjelasan bagian mana yang masih salah. dengan struktur yang sama, tolong perbaiki kode yang salah dengan kode yang benar!
-...
-...
+╔══════════════════════════════════════════════════════════════════════════════════╗
+║              AI LOG — DISASTER RESPONSE LOGISTICS SYSTEM                       ║
+║              ELT60213 Algoritma dan Struktur Data | TBP TA 2025/2026           ║
+╚══════════════════════════════════════════════════════════════════════════════════╝
+
+Mata Kuliah : ELT60213 Algoritma dan Struktur Data
+Dosen       : Dr.Eng. Ir. Aji Ery Burhandenny, ST., M.AIT.
+Prodi       : Teknik Elektro — Universitas Negeri Yogyakarta
+Topik       : 9 — Disaster Response Logistics System
+Tanggal     : 20 Mei 2026
+AI Tool     : Claude (Anthropic) — claude.ai
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PANDUAN PENGISIAN
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+• Catat SETIAP interaksi dengan AI yang mempengaruhi isi kode/laporan.
+• Sertakan screenshot percakapan di folder AI_Log/screenshots/.
+• Kode hasil AI wajib dipahami dan dapat dijelaskan oleh anggota yang bersangkutan.
+• Penggunaan AI tanpa pemahaman = kecurangan akademik.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+LOG INTERAKSI
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+──────────────────────────────────────────────────────────────────────────────────
+[LOG-001]
+Tanggal     : 18 Mei 2026
+Anggota     : Semua Anggota Tim
+AI Tool     : Claude (claude.ai)
+Sesi        : Sesi 1 — Pemahaman Struktur Proyek
+──────────────────────────────────────────────────────────────────────────────────
+
+PROMPT YANG DIKIRIM:
+  "Jelaskan struktur folder proyek berikut dan kegunaannya:
+   [screenshot struktur folder: .gitignore, src/, data_structures/,
+   modules/, main.py, tests/, docs/, experiments/, AI_Log/]"
+
+HASIL / RESPONS AI:
+  AI menjelaskan kegunaan setiap folder dan file dalam struktur proyek:
+  - src/data_structures/ : implementasi murni struktur data
+  - src/modules/         : logika aplikasi per topik
+  - src/main.py          : entry point CLI
+  - tests/               : unit test minimal 1 file per modul
+  - docs/                : laporan & slide presentasi
+  - experiments/         : skrip benchmark runtime
+  - AI_Log/              : log wajib penggunaan AI
+
+DIGUNAKAN UNTUK  : Pemahaman awal struktur repository sebelum pembagian tugas
+FILE TERDAMPAK   : Tidak ada (hanya pemahaman konseptual)
+SCREENSHOT       : screenshots/sesi1_struktur_folder.png
+
+──────────────────────────────────────────────────────────────────────────────────
+[LOG-002]
+Tanggal     : 18 Mei 2026
+Anggota     : Semua Anggota Tim
+AI Tool     : Claude (claude.ai)
+Sesi        : Sesi 2 — Generate Kode Lengkap Proyek
+──────────────────────────────────────────────────────────────────────────────────
+
+PROMPT YANG DIKIRIM:
+  "Saya sedang mengerjakan Team Based Project mata kuliah Algoritma dan
+   Struktur Data dengan topik: TOPIK 9 — Disaster Response Logistics System.
+   Gunakan Python 3 dan implementasikan semua struktur data dari nol tanpa
+   library bawaan untuk Queue, Stack, BST, dan Graph.
+
+   Tolong bantu saya menyelesaikan project ini dengan ketentuan berikut:
+   1. Selesaikan seluruh bagian kode yang masih bertuliskan TODO pada starter code.
+   2. Pertahankan struktur dan nama class yang sudah ada.
+   3. Tambahkan komentar Big-O pada setiap operasi utama.
+   4. Gunakan Linked List manual untuk Queue, Priority Queue, dan Stack.
+   5. Gunakan BST manual untuk data lokasi.
+   6. Gunakan adjacency list berbasis Linked List untuk Graph.
+   7. Tambahkan implementasi:
+      - PriorityQueueBantuan.enqueue(), dequeue()
+      - Stack.push(), pop(), to_list()
+      - BSTLokasi.insert(), search(), update_level(), inorder()
+      - GraphRute.tambah_node(), tambah_rute(), tetangga()
+      - BFS, DFS, Dijkstra, reconstruct_path()
+   8. Tambahkan CLI: KIRIM, PROSES, CARI, RUTE, LOG, KELUAR
+   9. Gunakan seed: np.random.seed(47), random.seed(47)
+
+   [disertakan screenshot starter code dari modul 1–6]"
+
+HASIL / RESPONS AI:
+  AI menghasilkan kode lengkap untuk semua file:
+  - src/data_structures/linked_list.py  → class LLNode
+  - src/data_structures/stack.py        → class Stack (push/pop/to_list)
+  - src/data_structures/queue_ll.py     → class PriorityQueueBantuan
+  - src/data_structures/bst.py          → class BSTLokasi (iteratif)
+  - src/data_structures/graph.py        → class GraphRute + Dijkstra
+  - src/modules/modul_1.py              → dataclass + generate_peta_bencana()
+  - src/modules/modul_2.py              → semua handler perintah CLI
+  - src/main.py                         → entry point CLI loop
+  - tests/test_linked_list.py           → 10 unit test Stack & PriorityQueue
+  - tests/test_bst.py                   → 13 unit test BST & Graph
+  - experiments/benchmark.py           → benchmark runtime semua struktur
+  - README.md                           → dokumentasi lengkap proyek
+
+  Catatan penting dari AI:
+  - BST diimplementasikan iteratif (bukan rekursif) agar tidak
+    RecursionError pada data besar (Python limit ~1000 rekursi).
+  - DFS menggunakan Stack manual yang diimplementasikan sendiri.
+  - Dijkstra tanpa min-heap (linear scan) sesuai ketentuan O(V²+E).
+  - Semua 23 unit test lulus.
+
+DIGUNAKAN UNTUK  : Implementasi seluruh kode proyek
+FILE TERDAMPAK   : Semua file src/, tests/, experiments/, README.md
+SCREENSHOT       : screenshots/sesi2_generate_kode_lengkap.png
+
+──────────────────────────────────────────────────────────────────────────────────
+[LOG-003]
+Tanggal     : 18 Mei 2026
+Anggota     : Semua Anggota Tim
+AI Tool     : Claude (claude.ai)
+Sesi        : Sesi 3 — Update Kode Sesuai Spesifikasi 6 Modul
+──────────────────────────────────────────────────────────────────────────────────
+
+PROMPT YANG DIKIRIM:
+  "untuk modulnya 1 sampai 6
+   [disertakan screenshot tabel spesifikasi 6 modul dari panduan TBP]
+
+   Tabel modul:
+   Modul 1 — Graph Jaringan Rute:
+     Graf berbobot tidak berarah (jarak km), adjacency list Linked List,
+     tambah_node, tambah_rute, tetangga, BFS. Big-O: add O(1), BFS O(V+E).
+   Modul 2 — Priority Queue Bantuan:
+     Priority Queue Linked List, KRITIS(1) prioritas tertinggi,
+     KIRIM=enqueue, PROSES_BANTUAN=dequeue. Big-O: enqueue O(n), dequeue O(1).
+   Modul 3 — BST Registry Lokasi:
+     BST kunci=kode_lokasi, data: kode/nama/level/populasi/status,
+     insert/search/update_level/inorder. Big-O: O(log n) rata-rata.
+   Modul 4 — Stack Log Pengiriman:
+     Stack LIFO transaksi pengiriman, LOG_PENGIRIMAN + ROLLBACK
+     (batalkan terakhir, kembalikan stok). Big-O: push/pop O(1).
+   Modul 5 — Dijkstra & Audit Jarak:
+     Dijkstra setiap depot, audit jarak dengan Selection Sort pada
+     Linked List, identifikasi lokasi paling sulit dijangkau.
+     Big-O: O(V²+E).
+   Modul 6 — CLI Logistik:
+     KIRIM, PROSES_BANTUAN, RUTE_OPTIMAL, UPDATE_LEVEL,
+     TIDAK_TERJANGKAU, LOG_PENGIRIMAN, LAPORAN_BENCANA, KELUAR."
+
+HASIL / RESPONS AI:
+  AI memperbarui kode sesuai spesifikasi tabel 6 modul:
+  - graph.py    : ditambah class SortNode + method audit_jarak()
+                  (Selection Sort pada Linked List untuk Modul 5)
+  - queue_ll.py : diperbarui docstring & logika FIFO untuk prioritas sama
+  - bst.py      : semua method diubah ke iteratif penuh
+  - stack.py    : ditambah dokumentasi ROLLBACK pada docstring
+  - modul_2.py  : ditambah cmd_rollback(), cmd_audit_jarak(), cmd_stok(),
+                  diperbarui cmd_kirim() dengan validasi stok depot,
+                  cmd_update_level() memperbarui prioritas di antrian
+
+DIGUNAKAN UNTUK  : Penyempurnaan kode sesuai rubrik 6 modul panduan TBP
+FILE TERDAMPAK   : graph.py, queue_ll.py, bst.py, stack.py, modul_2.py
+SCREENSHOT       : screenshots/sesi3_update_6_modul.png
+
+──────────────────────────────────────────────────────────────────────────────────
+[LOG-004]
+Tanggal     : 20 Mei 2026
+Anggota     : Semua Anggota Tim
+AI Tool     : Claude (claude.ai)
+Sesi        : Sesi 4 — Pembuatan Prompt Terpadu & Log Penggunaan AI
+──────────────────────────────────────────────────────────────────────────────────
+
+PROMPT YANG DIKIRIM:
+  "tolong satukan prompt yang saya tanyakan ke anda"
+
+HASIL / RESPONS AI:
+  AI menyatukan seluruh prompt dari sesi 1–3 menjadi satu prompt
+  komprehensif yang mencakup:
+  - Konteks mata kuliah dan topik proyek
+  - Starter code lengkap dengan semua TODO
+  - Tabel spesifikasi 6 modul dari panduan TBP
+  - Ketentuan implementasi (11 poin)
+  - Struktur folder repository
+  - Output yang diinginkan (kode, test, benchmark, README)
+
+DIGUNAKAN UNTUK  : Dokumentasi prompt terpadu untuk AI_Log
+FILE TERDAMPAK   : AI_Log/Log_prompt.txt (file ini)
+SCREENSHOT       : screenshots/sesi4_prompt_terpadu.png
+
+  "buatkan log_prompt.txt"
+
+HASIL / RESPONS AI:
+  AI membuat file AI_Log/Log_prompt.txt berisi dokumentasi lengkap
+  seluruh sesi interaksi AI selama pengerjaan proyek ini.
+
+DIGUNAKAN UNTUK  : Pemenuhan kewajiban AI_Log sesuai panduan TBP
+FILE TERDAMPAK   : AI_Log/Log_prompt.txt
+SCREENSHOT       : screenshots/sesi4_log_prompt.png
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+RINGKASAN PENGGUNAAN AI
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Total sesi         : 4 sesi
+  Total interaksi    : 4 prompt utama
+  AI Tool digunakan  : Claude (Anthropic) — claude.ai
+
+  Ringkasan file yang dihasilkan/dipengaruhi AI:
+
+  No  File                                  Sesi     Keterangan
+  ──  ────────────────────────────────────  ───────  ────────────────────────────
+  1   src/data_structures/linked_list.py    Sesi 2   Dibuat AI (LLNode)
+  2   src/data_structures/stack.py          Sesi 2   Dibuat AI, diperbarui Sesi 3
+  3   src/data_structures/queue_ll.py       Sesi 2   Dibuat AI, diperbarui Sesi 3
+  4   src/data_structures/bst.py            Sesi 2   Dibuat AI, diperbarui Sesi 3
+  5   src/data_structures/graph.py          Sesi 2   Dibuat AI, diperbarui Sesi 3
+  6   src/modules/modul_1.py                Sesi 2   Dibuat AI
+  7   src/modules/modul_2.py                Sesi 2   Dibuat AI, diperbarui Sesi 3
+  8   src/main.py                           Sesi 2   Dibuat AI
+  9   tests/test_linked_list.py             Sesi 2   Dibuat AI
+  10  tests/test_bst.py                     Sesi 2   Dibuat AI
+  11  experiments/benchmark.py              Sesi 2   Dibuat AI
+  12  README.md                             Sesi 2   Dibuat AI
+  13  AI_Log/Log_prompt.txt                 Sesi 4   Dibuat AI (file ini)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PERNYATAAN TIM
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Kami menyatakan bahwa:
+  1. Seluruh kode yang dihasilkan AI telah kami baca, pahami, dan dapat
+     kami jelaskan secara mandiri.
+  2. Kami memahami konsep Big-O, Linked List, Stack, Queue, BST, dan
+     Graph yang diimplementasikan dalam proyek ini.
+  3. Log ini dibuat dengan jujur sesuai panduan TBP TA 2025/2026.
+
+  Anggota Tim:
+  1. ________________________________  (NIM: _____________)
+  2. ________________________________  (NIM: _____________)
+  3. ________________________________  (NIM: _____________)
+  4. ________________________________  (NIM: _____________)
+
+  Yogyakarta, 20 Mei 2026
+  Tanda tangan ketua kelompok: ________________________
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
