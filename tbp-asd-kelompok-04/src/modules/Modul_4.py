@@ -1,3 +1,5 @@
+# Restu Pamungkas (25051030080)
+
 from src.models import LLNode
 
 class Stack: 
