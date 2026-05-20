@@ -1,84 +1,10 @@
-======================================================================
-LOG DOKUMENTASI ASISTENSI AI - TUGAS BESAR ALGORITMA & STRUKTUR DATA
-SISTEM LOGISTIK RESPONS BENCANA (DISASTER RESPONSE LOGISTICS SYSTEM)
-======================================================================
-Dibuat oleh : Kelompok 4
-Sistem CI   : GitHub Actions (ci.yml via PyTest)
-Target Code : Python 3.11 (Modular & Pure Architecture)
-Matakuliah  : ELT60213 Algoritma dan Struktur Data - Teknik Elektro UNY
-======================================================================
+import numpy as np
+import random
 
-----------------------------------------------------------------------
-SESI 1: REFACTORING & OPTIMASI PIPELINE GITHUB ACTIONS CI
-----------------------------------------------------------------------
-[Context / Problem]
-- Konfigurasi awal `.github/workflows/ci.yml` mengalami kegagalan (syntax error & spasi gantung YAML).
-- Mesin virtual Ubuntu Actions mengalami crash `Exit Code 1` karena ketiadaan berkas `requirements.txt` saat instalasi dependensi.
-
-[User Prompt]
-- "buatkan requirements.txt disaster response logistic system"
-- "# .github/workflows/ci.yml ... [menyerahkan kode YAML yang rusak]"
-
-[AI Solusi & Implementasi]
-- Memperbaiki struktur spasi (indentation) pada objek `steps:` di file `ci.yml` secara presisi menggunakan standard linting YAML.
-- Menyisipkan perintah kondisional bash shell: `if [ -f requirements.txt ]; then pip install -r requirements.txt; fi` untuk mencegah interupsi eror jika file requirements kosong.
-- Menginjeksikan variabel lingkungan `PYTHONPATH: ${{ github.workspace }}/src` ke dalam tahap pengujian PyTest untuk mengatasi kendala runtime `ModuleNotFoundError`.
-
-----------------------------------------------------------------------
-SESI 2: IMPLEMENTASI STRUKTUR DATA MURNI (PURE DATA STRUCTURES)
-----------------------------------------------------------------------
-[Context / Problem]
-- Melengkapi seluruh `# TODO` kode pemrograman pada halaman 41-42 panduan laboratorium.
-- Larangan penggunaan struktur data bawaan (built-in list/dict) untuk fungsionalitas utama dan kewajiban enkapsulasi berbasis pointer Linked List.
-
-[User Prompt]
-- "lengkapilah todo code tersebut dan buatkan juga data_structures bst.py graph.py linked_list.py queue_11.py stack.py ... "
-
-[AI Solusi & Implementasi]
-- `linked_list.py`: Membangun simpul rantai `LLNode` sebagai fondasi data linear bertipe objek.
-- `queue_ll.py`: Mengimplementasikan `PriorityQueueBantuan` dengan metode `.enqueue()` berbasis *insertion sort* terurut prioritas $O(n)$ (Prioritas level=1 KRITIS didahulukan) dan `.dequeue()` efisiensi konstan $O(1)$.
-- `stack.py`: Merealisasikan struktur `Stack` murni (LIFO) untuk mencatat log pengiriman, dilengkapi metode `.to_list()` untuk mengekstraksi data dari *top* ke *bottom* demi kebutuhan audit kronologis.
-- `bst.py`: Membuat struktur `BSTLokasi` dan `BSTNodeLok` dengan kunci `lokasi.kode` untuk mendukung operasi `.insert()`, `.search()`, dan `.update_level()` dengan kompleksitas rata-rata $O(\log n)$.
-- `graph.py`: Menyelesaikan kelas `EdgeNode` dan `GraphRute` menggunakan representasi *Adjacency List* kustom untuk graf tidak berarah. Melengkapi fungsi `.bfs_akses()` untuk mengembalikan data keterjangkauan node dari depot.
-
-----------------------------------------------------------------------
-SESI 3: INTEGRASI ARSITEKTUR MODUL APLIKASI & INTERFASE CLI
-----------------------------------------------------------------------
-[Context / Problem]
-- Pemisahan logika struktur data murni dengan fungsi fitur komputasi berdasarkan hasil restrukturisasi nama file (*snake_case*).
-- Kebutuhan fungsi pembuatan peta otomatis (*mock data*) menggunakan `np.random.default_rng` dari dosen pengampu.
-
-[User Prompt]
-- "buatkan modules Modul_1_Graph _Jaringan_Rute.py ... Modul_6_CLI_Logistik.py main.py"
-
-[AI Solusi & Implementasi]
-- Mengintegrasikan fungsi pembangun peta `generate_peta_bencana(35, 3)` di dalam `main.py` menggunakan `@dataclass` `Lokasi` dan `Bantuan`.
-- Menyusun logika Algoritma Dijkstra $O(V^2 + E)$ pada `Modul_5_Dijkstra_dan_Audit_Jarak.py` dengan pencarian node minimum manual tanpa library luar.
-- Menyusun fungsi deteksi wilayah terisolasi memanfaatkan selisih himpunan (*set difference*) antara total node dengan hasil penelusuran BFS pada `Modul_1_Graph_Jaringan_Rute.py`.
-- Menambahkan *intercept argument* `--test` pada `main.py` agar saat sistem dijalankan oleh robot CI GitHub Actions, aplikasi memvalidasi fungsi internal lalu keluar dengan `sys.exit(0)`, sehingga mencegah sistem terjebak dalam *infinite loop* CLI (`while True`).
-
-----------------------------------------------------------------------
-SESI 4: PENYUSUNAN QUALITY ASSURANCE (UNIT TESTING) & BENCHMARK
-----------------------------------------------------------------------
-[Context / Problem]
-- Memenuhi prasyarat pengujian otomatis pada repositori dan mengumpulkan data performa empiris untuk rubrik penilaian Analisis Big-O.
-
-[User Prompt]
-- "buatkan tests bst dan graph"
-- "test linked list"
-- "buatkan test queue"
-- "buatkan experiments benchmark.py"
-
-[AI Solusi & Implementasi]
-- `test_linked_list.py`: Menguji keruntunan pointer sekuensial dan penanganan tipe data kamus.
-- `test_bst.py`: Menguji presisi penempatan cabang kiri/kanan berdasarkan kode alfabetis serta fungsi pembaruan tingkat kedaruratan.
-- `test_graph.py`: Menguji validitas pembuatan sisi bolak-balik graf tidak berarah dan deteksi isolasi BFS.
-- `test_queue.py`: Membuktikan bahwa muatan dengan prioritas level 1 otomatis melompat ke antrean terdepan meskipun dimasukkan paling terakhir.
-- `benchmark.py`: Menggunakan fungsi `time.perf_counter()` untuk mencatat performa waktu riil pada antrean dan algoritma Dijkstra dengan skala data ($N$) yang meningkat teratur (100 hingga 5000 sampel data).
-
-======================================================================
-STATUS AKHIR REPOSITORI:
-- Seluruh pengujian otomatis di server GitHub lulus (Centang Hijau / Success).
-- Bebas dari dependensi library visualisasi luar pada modul inti.
-- Siap digunakan untuk pengisian laporan esai analisis Big-O.
-======================================================================
+# Langsung panggil tanpa awalan 'src.'
+from models import Lokasi, Bantuan
+from data_structures.queue_ll import PriorityQueueBantuan
+from data_structures.stack import Stack
+from data_structures.bst import BSTLokasi
+from data_structures.graph import GraphRute, dijkstra_logistik
+from modules.audit import selection_sort_audit
