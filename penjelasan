@@ -1,1 +1,11 @@
+Kode tersebut merupakan implementasi struktur data graf untuk sistem logistik atau pencarian rute menggunakan adjacency list berbasis linked list.
+Class EdgeNode digunakan untuk merepresentasikan sisi (edge) yang menyimpan tujuan (dest), jarak (jarak), kapasitas (kapasitas), dan pointer ke edge berikutnya (next).
 
+Class GraphRute berfungsi sebagai graf utama yang menyimpan hubungan antar node dalam dictionary adj.
+Method tambah_node() dipakai untuk menambahkan node baru, sedangkan tambah_rute() digunakan untuk menambahkan rute dua arah antar node beserta jarak dan kapasitasnya sehingga graf bersifat tidak berarah.
+
+Method tetangga() digunakan untuk mengambil seluruh tetangga dari suatu node dalam bentuk list tuple yang berisi tujuan, jarak, dan kapasitas.
+Fungsi bfs_akses() menerapkan algoritma Breadth First Search (BFS) menggunakan queue berbasis linked list untuk mencari semua node yang dapat diakses dari depot dengan kompleksitas waktu O(V+E).
+
+Sementara itu, fungsi dijkstra_logistik() mengimplementasikan algoritma Dijkstra untuk mencari jalur terpendek dari depot ke seluruh node pada graf dengan menghitung jarak minimum dan menyimpan parent tiap node agar jalur dapat direkonstruksi kembali.
+Kompleksitas algoritma Dijkstra pada kode ini adalah O(V²+E) karena proses pencarian node dengan jarak minimum masih menggunakan linear scan tanpa priority queue.
