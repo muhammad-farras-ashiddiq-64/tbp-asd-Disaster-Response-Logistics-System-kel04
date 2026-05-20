@@ -6,36 +6,23 @@ FOLDER_UTAMA = str(Path(__file__).resolve().parents[1])
 if FOLDER_UTAMA not in sys.path:
     sys.path.insert(0, FOLDER_UTAMA)
 
-from src.main import Lokasi, BSTLokasi
+from src.main import Stack
 
-class TestModul4BST(unittest.TestCase):
-    def test_operasi_bst(self):
-        print("\n[RUNNING] Menguji Modul 4: Binary Search Tree...")
-        bst = BSTLokasi()
+class TestModul3Stack(unittest.TestCase):
+    def test_mekanisme_lifo(self):
+        print("\n[RUNNING] Menguji Modul 3: Struktur Data Stack...")
+        tumpukan = Stack()
+        tumpukan.push("LOG_PENGIRIMAN_A")
+        tumpukan.push("LOG_PENGIRIMAN_B")
         
-        l1 = Lokasi("L020", "Desa Tengah", 2, 500)
-        l2 = Lokasi("L010", "Desa Kiri", 1, 300)
-        l3 = Lokasi("L030", "Desa Kanan", 3, 700)
+        # Elemen terakhir masuk harus keluar pertama (LIFO)
+        self.assertEqual(tumpukan.peek(), "LOG_PENGIRIMAN_B")
+        self.assertEqual(tumpukan.pop(), "LOG_PENGIRIMAN_B")
         
-        bst.insert(l1)
-        bst.insert(l2)
-        bst.insert(l3)
-        
-        # Uji Pencarian (Search)
-        target = bst.search("L030")
-        self.assertIsNotNone(target)
-        self.assertEqual(target.nama, "Desa Kanan")
-        
-        # Uji Pembaruan Level (Update)
-        bst.update_level("L010", 3)
-        self.assertEqual(bst.search("L010").level, 3)
-        
-        # Uji Pengurutan (Inorder Traversal)
-        urut = bst.inorder()
-        self.assertEqual(urut[0].kode, "L010")
-        self.assertEqual(urut[1].kode, "L020")
-        self.assertEqual(urut[2].kode, "L030")
-        print("[SUCCESS] Operasi Kamus Data BST Lolos Validasi!")
+        # Tersisa elemen pertama
+        self.assertEqual(tumpukan.pop(), "LOG_PENGIRIMAN_A")
+        self.assertIsNone(tumpukan.pop())
+        print("[SUCCESS] Mekanisme Stack LIFO Berjalan Sempurna!")
 
 if __name__ == "__main__":
     unittest.main()
