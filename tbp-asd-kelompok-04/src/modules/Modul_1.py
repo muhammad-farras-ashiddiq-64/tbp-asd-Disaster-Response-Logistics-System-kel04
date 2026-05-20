@@ -1,207 +1,101 @@
-import numpy as np
-import random
-import time
-from dataclasses import dataclass
-from typing import Optional, List, Dict
+from typing import List, Tuple, Dict
+from src.models import LLNode
 
-np.random.seed(25)
-random.seed(25)
+class EdgeNode: 
+    def __init__(self, dest, jarak, kapasitas): 
+        self.dest = dest 
+        self.jarak = jarak 
+        self.kapasitas = kapasitas 
+        self.next = None 
 
-# =========================================
-# LEVEL PRIORITAS BENCANA
-# =========================================
+class GraphRute: 
+    def __init__(self): 
+        self.adj = {} 
 
-PRIORITAS_BENCANA = {
-    'DARURAT': 1,
-    'WASPADA': 2,
-    'AMAN': 3
-}
+    def tambah_node(self, kode): 
+        """Big-O: O(1).""" 
+        if kode not in self.adj:
+            self.adj[kode] = None 
 
-# =========================================
-# JENIS LOGISTIK
-# =========================================
+    def tambah_rute(self, u, v, jarak, kapasitas): 
+        """Big-O: O(1). Graf tidak berarah.""" 
+        self.tambah_node(u)
+        self.tambah_node(v)
+        
+        node_v = EdgeNode(v, jarak, kapasitas)
+        node_v.next = self.adj[u]
+        self.adj[u] = node_v
+        
+        node_u = EdgeNode(u, jarak, kapasitas)
+        node_u.next = self.adj[v]
+        self.adj[v] = node_u
 
-JENIS_LOGISTIK = [
-    'MAKANAN',
-    'AIR_BERSIH',
-    'OBAT_MEDIS',
-    'PAKAIAN',
-    'GENSET'
-]
+    def tetangga(self, u) -> List[Tuple[str, int, int]]: 
+        """Big-O: O(deg).""" 
+        result = []
+        current = self.adj.get(u, None)
+        while current:
+            result.append((current.dest, current.jarak, current.kapasitas))
+            current = current.next
+        return result
 
-# =========================================
-# DATA LOKASI BENCANA
-# =========================================
+    def bfs_akses(self, depot) -> set: 
+        """BFS dari depot menggunakan antrian manual. Big-O: O(V+E).""" 
+        visited = set()
+        if depot not in self.adj:
+            return visited
+            
+        head = tail = LLNode(depot)
+        visited.add(depot)
+        
+        while head:
+            curr_node = head.data
+            head = head.next
+            if head is None:
+                tail = None
+                
+            current_edge = self.adj.get(curr_node, None)
+            while current_edge:
+                if current_edge.dest not in visited:
+                    visited.add(current_edge.dest)
+                    new_queue_node = LLNode(current_edge.dest)
+                    if tail is None:
+                        head = tail = new_queue_node
+                    else:
+                        tail.next = new_queue_node
+                        tail = new_queue_node
+                current_edge = current_edge.next
+        return visited
 
-@dataclass
-class Wilayah:
-    kode: str
-    nama: str
-    prioritas: int
-    jumlah_pengungsi: int
-    sudah_dibantu: bool = False
-
-# =========================================
-# DATA DISTRIBUSI LOGISTIK
-# =========================================
-
-@dataclass
-class Logistik:
-    logistik_id: int
-    jenis: str
-    stok: int
-    gudang_asal: str
-    lokasi_tujuan: str
-    prioritas_kirim: int
-
-# =========================================
-# NODE UNTUK ADJACENCY LIST
-# =========================================
-
-class JalurNode:
-    def __init__(self, tujuan, jarak, kapasitas):
-        self.tujuan = tujuan
-        self.jarak = jarak
-        self.kapasitas = kapasitas
-        self.next = None
-
-# =========================================
-# GRAPH SISTEM LOGISTIK
-# =========================================
-
-class GraphLogistik:
-
-    def __init__(self):
-        self.adjacent = {}
-        self.daftar_lokasi = []
-
-    # =====================================
-    # MENAMBAHKAN LOKASI
-    # =====================================
-
-    def tambah_lokasi(self, nama):
-
-        if nama not in self.adjacent:
-            self.adjacent[nama] = None
-            self.daftar_lokasi.append(nama)
-
-    # =====================================
-    # MENAMBAHKAN JALUR DISTRIBUSI
-    # =====================================
-
-    def tambah_jalur(self, asal, tujuan, jarak, kapasitas):
-
-        self.tambah_lokasi(asal)
-        self.tambah_lokasi(tujuan)
-
-        # asal -> tujuan
-        node_baru = JalurNode(
-            tujuan,
-            jarak,
-            kapasitas
-        )
-
-        node_baru.next = self.adjacent[asal]
-        self.adjacent[asal] = node_baru
-
-        # tujuan -> asal
-        node_balik = JalurNode(
-            asal,
-            jarak,
-            kapasitas
-        )
-
-        node_balik.next = self.adjacent[tujuan]
-        self.adjacent[tujuan] = node_balik
-
-    # =====================================
-    # MENAMPILKAN JALUR
-    # =====================================
-
-    def tampilkan_jalur(self):
-
-        for lokasi in self.adjacent:
-
-            print(f"\n{lokasi}")
-
-            curr = self.adjacent[lokasi]
-
-            while curr:
-
-                print(
-                    f" -> {curr.tujuan} "
-                    f"(Jarak: {curr.jarak} km, "
-                    f"Kapasitas: {curr.kapasitas})"
-                )
-
-                curr = curr.next
-
-# =========================================
-# SIMULASI DATA
-# =========================================
-
-wilayah_1 = Wilayah(
-    "W01",
-    "Desa Harapan",
-    PRIORITAS_BENCANA['DARURAT'],
-    1500
-)
-
-wilayah_2 = Wilayah(
-    "W02",
-    "Posko Utama",
-    PRIORITAS_BENCANA['WASPADA'],
-    700
-)
-
-logistik_1 = Logistik(
-    101,
-    "MAKANAN",
-    300,
-    "Gudang Pusat",
-    "Desa Harapan",
-    1
-)
-
-# =========================================
-# MEMBUAT GRAPH
-# =========================================
-
-graph = GraphLogistik()
-
-graph.tambah_jalur(
-    "Gudang Pusat",
-    "Posko Utama",
-    10,
-    100
-)
-
-graph.tambah_jalur(
-    "Posko Utama",
-    "Desa Harapan",
-    7,
-    60
-)
-
-graph.tambah_jalur(
-    "Gudang Pusat",
-    "Rumah Sakit",
-    12,
-    80
-)
-
-# =========================================
-# OUTPUT
-# =========================================
-
-print("=== SISTEM LOGISTIK TANGGAP BENCANA ===")
-
-print("\nData Wilayah:")
-print(wilayah_1)
-print(wilayah_2)
-
-print("\nData Logistik:")
-print(logistik_1)
-
-print("\nJalur Distribusi:")
-graph.tampilkan_jalur()
+def dijkstra_logistik(graph: GraphRute, depot: str) -> Tuple[Dict[str, float], Dict[str, str]]: 
+    """Shortest path dari depot. Big-O: O(V^2+E).""" 
+    INF = float('inf') 
+    dist = {v: INF for v in graph.adj} 
+    parent = {v: None for v in graph.adj} 
+    dist[depot] = 0 
+    visited = set() 
+    
+    for _ in range(len(graph.adj)):
+        u = None
+        min_dist = INF
+        for v in graph.adj:
+            if v not in visited and dist[v] < min_dist:
+                min_dist = dist[v]
+                u = v
+                
+        if u is None:
+            break
+            
+        visited.add(u)
+        
+        current_edge = graph.adj.get(u, None)
+        while current_edge:
+            v = current_edge.dest
+            if v not in visited:
+                new_dist = dist[u] + current_edge.jarak
+                if new_dist < dist[v]:
+                    dist[v] = new_dist
+                    parent[v] = u
+            current_edge = current_edge.next
+            
+    return dist, parent
