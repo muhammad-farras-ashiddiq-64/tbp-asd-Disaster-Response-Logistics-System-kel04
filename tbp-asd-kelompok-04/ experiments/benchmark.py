@@ -1,149 +1,81 @@
-import sys
-import os
-import time
-import random
-import numpy as np
+PS C:\Users\DELL\OneDrive - uny.ac.id\Dokumen\GitHub\tbp-asd-Disaster-Response-Logistics-System-kel04> & C:\msys64\ucrt64\bin\python.exe "c:/Users/DELL/OneDrive - uny.ac.id/Dokumen/GitHub/tbp-asd-Disaster-Response-Logistics-System-kel04/tbp-asd-kelompok-04/src/main.py"
+Disaster Response Logistics System. Ketik BANTUAN untuk daftar perintah.
 
-sys.path.append(
-    os.path.abspath(
-        os.path.join(os.path.dirname(__file__), '..', 'src')
-    )
-)
+Logistik-CLI> BANTUAN
+Daftar Perintah Tersedia:
+  KIRIM <depot> <lokasi> <jenis_bantuan> <jumlah>
+  PROSES_BANTUAN
+  RUTE_OPTIMAL <depot> <tujuan>
+  UPDATE_LEVEL <kode_lokasi> <level_baru>
+  TIDAK_TERJANGKAU <depot>
+  LOG_PENGIRIMAN
+  LAPORAN_BENCANA
+  ROLLBACK
+  KELUAR
 
-from main import Bantuan, Lokasi, generate_peta_bencana
-from data_structures.queue_ll import PriorityQueueBantuan
-from data_structures.graph import GraphRute
-from data_structures.bst import BSTLokasi
-from data_structures.stack import Stack
-from modules.Modul_5_Dijkstra_dan_Audit_Jarak import dijkstra_logistik
+Logistik-CLI> LAPORAN_BENCANA
+KODE       | NAMA LOKASI            | LEVEL  | POPULASI
+-------------------------------------------------------
+DEPOT_0    | Gudang Logistik 0      | RINGAN | 0       
+DEPOT_1    | Gudang Logistik 1      | RINGAN | 0       
+DEPOT_2    | Gudang Logistik 2      | RINGAN | 0       
+L000       | Desa/Kelurahan-0       | RINGAN | 2764    
+L001       | Desa/Kelurahan-1       | SEDANG | 3792    
+L002       | Desa/Kelurahan-2       | KRITIS | 485     
+L003       | Desa/Kelurahan-3       | SEDANG | 4837    
+L004       | Desa/Kelurahan-4       | SEDANG | 2196    
+L005       | Desa/Kelurahan-5       | SEDANG | 4303    
+L006       | Desa/Kelurahan-6       | KRITIS | 1533    
+L007       | Desa/Kelurahan-7       | RINGAN | 3777    
+L008       | Desa/Kelurahan-8       | SEDANG | 4154    
+L009       | Desa/Kelurahan-9       | RINGAN | 4126    
+L010       | Desa/Kelurahan-10      | SEDANG | 1513    
+L011       | Desa/Kelurahan-11      | RINGAN | 1620    
+L012       | Desa/Kelurahan-12      | RINGAN | 2797    
+L013       | Desa/Kelurahan-13      | RINGAN | 1048    
+L014       | Desa/Kelurahan-14      | KRITIS | 2077    
+L015       | Desa/Kelurahan-15      | KRITIS | 2800    
+L016       | Desa/Kelurahan-16      | RINGAN | 4796    
+L017       | Desa/Kelurahan-17      | RINGAN | 4775    
+L018       | Desa/Kelurahan-18      | RINGAN | 4305    
+L019       | Desa/Kelurahan-19      | RINGAN | 3682    
+L020       | Desa/Kelurahan-20      | SEDANG | 2767    
+L021       | Desa/Kelurahan-21      | SEDANG | 1526    
+L022       | Desa/Kelurahan-22      | RINGAN | 4373    
+L023       | Desa/Kelurahan-23      | RINGAN | 4973    
+L024       | Desa/Kelurahan-24      | RINGAN | 2474    
+L025       | Desa/Kelurahan-25      | RINGAN | 2319    
+L026       | Desa/Kelurahan-26      | RINGAN | 2724    
+L027       | Desa/Kelurahan-27      | RINGAN | 4715    
+L028       | Desa/Kelurahan-28      | KRITIS | 510     
+L029       | Desa/Kelurahan-29      | SEDANG | 3187    
+L030       | Desa/Kelurahan-30      | KRITIS | 932     
+L031       | Desa/Kelurahan-31      | RINGAN | 348     
+L032       | Desa/Kelurahan-32      | SEDANG | 1526    
+L033       | Desa/Kelurahan-33      | RINGAN | 561     
+L034       | Desa/Kelurahan-34      | SEDANG | 191     
 
+Logistik-CLI> KIRIM DEPOT_0 L000 MAKANAN 100
+Sukses: Bantuan ID 1 (Prioritas: 3) dimasukkan ke antrian.
 
-def benchmark_priority_queue():
-    print("\n--- BENCHMARK 1: PRIORITY QUEUE ENQUEUE O(N) ---")
-    print(f"{'Jumlah Data (N)':<20} | {'Waktu Eksekusi (Detik)':<25}")
-    print("-" * 50)
+Logistik-CLI> KIRIM DEPOT_0 L001 OBAT 50
+Sukses: Bantuan ID 2 (Prioritas: 2) dimasukkan ke antrian.
 
-    skala_n = [100, 500, 1000, 3000, 5000]
+Logistik-CLI> PROSES_BANTUAN
+[PENGIRIMAN] Memproses Bantuan ID 2:
+  Kirim 50 x OBAT dari DEPOT_0 ke L001
 
-    for n in skala_n:
-        pq = PriorityQueueBantuan()
+Logistik-CLI> PROSES_BANTUAN
+[PENGIRIMAN] Memproses Bantuan ID 1:
+  Kirim 100 x MAKANAN dari DEPOT_0 ke L000
 
-        start_time = time.perf_counter()
+Logistik-CLI> RUTE_OPTIMAL DEPOT_0 L001
+Rute Terpendek (93 km): DEPOT_0 -> L018 -> L001
 
-        for i in range(n):
-            prioritas_acak = random.randint(1, 3)
+Logistik-CLI> LOG_PENGIRIMAN
+=== RIWAYAT TRANSAKSI PENGIRIMAN (LIFO) ===
+ID 1: 100 MAKANAN (DEPOT_0 -> L000)
+ID 2: 50 OBAT (DEPOT_0 -> L001)
 
-            obj_bantuan = Bantuan(
-                bantuan_id=i,
-                jenis="MAKANAN",
-                jumlah=100,
-                asal="DEPOT_0",
-                tujuan=f"L{i:03d}",
-                prioritas=prioritas_acak
-            )
-
-            pq.enqueue(obj_bantuan)
-
-        end_time = time.perf_counter()
-        durasi = end_time - start_time
-
-        print(f"{n:<20} | {durasi:<25.6f}")
-
-
-def benchmark_bst():
-    print("\n--- BENCHMARK 2: BST INSERT O(log N) ---")
-    print(f"{'Jumlah Data (N)':<20} | {'Waktu Eksekusi (Detik)':<25}")
-    print("-" * 50)
-
-    skala_n = [100, 500, 1000, 3000, 5000]
-
-    for n in skala_n:
-        bst = BSTLokasi()
-
-        start_time = time.perf_counter()
-
-        for i in range(n):
-            lokasi = Lokasi(
-                kode=f"L{i:05d}",
-                nama=f"Lokasi-{i}",
-                level=random.randint(1,3),
-                populasi=random.randint(100,5000)
-            )
-
-            bst.insert(lokasi)
-
-        end_time = time.perf_counter()
-        durasi = end_time - start_time
-
-        print(f"{n:<20} | {durasi:<25.6f}")
-
-
-def benchmark_stack():
-    print("\n--- BENCHMARK 3: STACK PUSH O(1) ---")
-    print(f"{'Jumlah Data (N)':<20} | {'Waktu Eksekusi (Detik)':<25}")
-    print("-" * 50)
-
-    skala_n = [100, 500, 1000, 3000, 5000]
-
-    for n in skala_n:
-        stack = Stack()
-
-        start_time = time.perf_counter()
-
-        for i in range(n):
-            stack.push(i)
-
-        end_time = time.perf_counter()
-        durasi = end_time - start_time
-
-        print(f"{n:<20} | {durasi:<25.6f}")
-
-
-def benchmark_dijkstra():
-    print("\n--- BENCHMARK 4: ALGORITMA DIJKSTRA O(V² + E) ---")
-    print(f"{'Jumlah Lokasi (V)':<20} | {'Waktu Eksekusi (Detik)':<25}")
-    print("-" * 50)
-
-    skala_v = [10, 35, 75, 150, 300]
-
-    for v in skala_v:
-        graph = GraphRute()
-
-        lokasi_list, edges = generate_peta_bencana(
-            n_lokasi=v,
-            n_depot=3,
-            seed=47
-        )
-
-        for lok in lokasi_list:
-            graph.tambah_node(lok.kode)
-
-        for u, v_edge, j, k in edges:
-            graph.tambah_rute(u, v_edge, j, k)
-
-        start_time = time.perf_counter()
-
-        dijkstra_logistik(graph, "DEPOT_0")
-
-        end_time = time.perf_counter()
-        durasi = end_time - start_time
-
-        print(f"{len(lokasi_list):<20} | {durasi:<25.6f}")
-
-
-if __name__ == "__main__":
-
-    print("==================================================")
-    print("      EXPERIMENTAL RUNTIME BENCHMARK SUITE       ")
-    print("==================================================")
-
-    random.seed(42)
-
-    benchmark_priority_queue()
-    benchmark_bst()
-    benchmark_stack()
-    benchmark_dijkstra()
-
-    print("\n==================================================")
-    print("Eksperimen selesai. Hasil siap dianalisis.")
-    print("==================================================")
+Logistik-CLI> KELUAR
+Keluar dari sistem. Terima kasih.
